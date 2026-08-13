@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>可控核聚变 · 技术发展路径 | 团队内训</title>
+    <style>
+        /* === 全局重置 & 基础 === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+            background: #0b0e1a;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            color: #e0edf5;
+        }
+
+        /* 幻灯片容器 */
+        .slides-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5% 8%;
+            opacity: 0;
+            transition: opacity 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+            pointer-events: none;
+            background: radial-gradient(circle at 20% 30%, #132a3f, #0b0e1a 90%);
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 页码 */
+        .page-indicator {
+            position: absolute;
+            bottom: 28px;
+            right: 40px;
+            font-size: 1rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            background: rgba(10, 30, 50, 0.55);
+            backdrop-filter: blur(4px);
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 1px solid rgba(0, 180, 216, 0.25);
+            color: #8ecae6;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            z-index: 20;
+        }
+
+        /* 导航提示 */
+        .nav-hint {
+            position: absolute;
+            bottom: 28px;
+            left: 40px;
+            font-size: 0.85rem;
+            color: #4a6c7c;
+            letter-spacing: 1px;
+            background: rgba(0,0,0,0.3);
+            padding: 4px 16px;
+            border-radius: 30px;
+            border: 1px solid #1f4459;
+            backdrop-filter: blur(2px);
+            z-index: 20;
+        }
+
+        /* ===== 科技感元素 ===== */
+        .glow-line {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3aa8d6, #7ad0ff, #3aa8d6, transparent);
+            margin: 20px auto;
+            border-radius: 4px;
+            filter: drop-shadow(0 0 8px #2b9bd6);
+        }
+
+        .tech-grid-bg {
+            background-image: 
+                linear-gradient(rgba(0, 180, 216, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 180, 216, 0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* 标题装饰 */
+        .section-number {
+            font-size: 0.9rem;
+            color: #4db8d6;
+            letter-spacing: 4px;
+            border: 1px solid #2b7b9e;
+            padding: 4px 18px;
+            border-radius: 30px;
+            background: rgba(0, 80, 120, 0.15);
+            backdrop-filter: blur(2px);
+            display: inline-block;
+            margin-bottom: 12px;
+            font-weight: 300;
+        }
+
+        /* 通用标题 */
+        h1 {
+            font-size: 4.2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #e0f2fe, #7ad0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(58, 168, 214, 0.3);
+        }
+
+        h2 {
+            font-size: 2.6rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: #d6edff;
+            margin-bottom: 0.5rem;
+            border-left: 6px solid #1f8bb0;
+            padding-left: 20px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #b3d9f0;
+            letter-spacing: 1px;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #9bb9d0;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* 内容列表 */
+        .point-list {
+            list-style: none;
+            width: 100%;
+            max-width: 900px;
+            margin: 20px 0 0 0;
+        }
+
+        .point-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #d4e9f5;
+            background: rgba(16, 40, 60, 0.4);
+            backdrop-filter: blur(4px);
+            padding: 14px 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            transition: 0.2s;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+        }
+
+        .point-list li:hover {
+            border-color: #3b9fc7;
+            background: rgba(25, 55, 80, 0.5);
+            transform: translateX(6px);
+        }
+
+        .point-list .icon {
+            font-size: 1.8rem;
+            line-height: 1.2;
+            min-width: 40px;
+            text-align: center;
+            filter: drop-shadow(0 0 6px #1a8bb0);
+        }
+
+        .point-list .text {
+            flex: 1;
+        }
+
+        .point-list .highlight {
+            color: #7fc9ed;
+            font-weight: 500;
+        }
+
+        .data-source {
+            font-size: 0.75rem;
+            color: #6f8d9e;
+            margin-top: 6px;
+            display: block;
+            border-top: 1px dashed #2e5a70;
+            padding-top: 4px;
+        }
+
+        /* 双栏布局 */
+        .two-col-wrapper {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            gap: 40px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .col {
+            flex: 1;
+            min-width: 240px;
+            background: rgba(12, 30, 48, 0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            padding: 28px 24px;
+            border: 1px solid rgba(0, 160, 200, 0.2);
+            box-shadow: 0 10px 20px -8px rgba(0,0,0,0.6);
+        }
+
+        .col h4 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #b0def5;
+            border-bottom: 1px solid #1f6380;
+            padding-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .col ul {
+            list-style: none;
+        }
+
+        .col ul li {
+            margin-bottom: 14px;
+            font-size: 1rem;
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+            color: #cadeed;
+        }
+
+        .col ul li::before {
+            content: "◆";
+            color: #33b5d6;
+            font-size: 1.2rem;
+            filter: drop-shadow(0 0 6px #1f9bc0);
+        }
+
+        /* 封面特殊 */
+        .cover-sub {
+            font-size: 1.4rem;
+            letter-spacing: 6px;
+            color: #b3d4e8;
+            border-top: 1px solid #2a7a99;
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+
+        .cover-date {
+            margin-top: 40px;
+            font-size: 1rem;
+            color: #5c8da3;
+        }
+
+        /* 章节页大字 */
+        .section-title {
+            font-size: 4.8rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            color: #ddf0ff;
+            text-shadow: 0 0 30px rgba(0, 180, 216, 0.3);
+            background: rgba(0, 40, 70, 0.3);
+            padding: 20px 60px;
+            border-radius: 100px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+        }
+
+        .section-sub {
+            font-size: 1.1rem;
+            color: #7eb4cc;
+            margin-top: 20px;
+            letter-spacing: 6px;
+        }
+
+        /* 结束页 */
+        .ending-title {
+            font-size: 4rem;
+            font-weight: 300;
+            color: #d0eaff;
+            text-shadow: 0 0 40px #1b6f8f;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            .section-title { font-size: 2.8rem; padding: 12px 30px; }
+            .slide { padding: 10% 5%; }
+            .point-list li { font-size: 1rem; padding: 12px 16px; }
+            .two-col-wrapper { flex-direction: column; }
+        }
+
+        /* 滚动条隐藏 */
+        .slide::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body>
+<div class="slides-container" id="slidesContainer">
+    <!-- 1. 封面 -->
+    <div class="slide active tech-grid-bg" data-index="0">
+        <div style="text-align: center;">
+            <div class="section-number">✦ 聚变纪元 ✦</div>
+            <h1 style="font-size:4.8rem;">可控核聚变</h1>
+            <div style="font-size:1.8rem; color: #a5cfe0; letter-spacing: 4px; margin: 10px 0 20px;">技术发展路径</div>
+            <div class="glow-line" style="width:140px;"></div>
+            <div class="cover-sub">从托卡马克到聚变堆 · 未来能源路线图</div>
+            <div class="cover-date">团队内部培训 · 2025</div>
+        </div>
+        <div class="page-indicator">1 / 10</div>
+        <div class="nav-hint">←  /  →</div>
+    </div>
+
+    <!-- 2. 内容页：聚变原理 -->
+    <div class="slide tech-grid-bg" data-index="1">
+        <div style="width:100%; max-width: 1100px;">
+            <h2>⚡ 聚变基本原理</h2>
+            <div class="glow-line"></div>
+            <ul class="point-list">
+                <li><span class="icon">☀️</span><span class="text"><span class="highlight">轻核聚合</span> 氘氚反应：D + T → He⁴ + n + 17.6 MeV，比裂变能量密度高4倍</span></li>
+                <li><span class="icon">🔥</span><span class="text"><span class="highlight">劳森判据</span> 温度>1.5亿°C，等离子体密度×约束时间 > 3×10²¹ keV·s/m³</span></li>
+                <li><span class="icon">🌍</span><span class="text"><span class="highlight">燃料丰富</span> 海水中氘含量约0.016g/L，可供人类使用数亿年</span></li>
+                <li><span class="icon">🧪</span><span class="text"><span class="highlight">第一壁挑战</span> 14.1MeV中子辐照，材料活化与热负荷 (ITER数据)</span></li>
+            </ul>
+            <div class="data-source">数据来源: ITER Physics Basis, 核聚变原理 (M. Kikuchi, 2020)</div>
+        </div>
+        <div class="page-indicator">2 / 10</div>
+    </div>
+
+    <!-- 3. 章节页：磁约束路径 -->
+    <div class="slide" data-index="2" style="background: radial-gradient(circle at 70% 30%, #0b2b3f, #050a14);">
+        <div class="section-title">✦ 磁约束路线 ✦</div>
+        <div class="section-sub">托卡马克 · 仿星器 · 球形环</div>
+        <div style="margin-top:30px; font-size:1.1rem; color:#8bb4cc;">占据全球聚变研究 80% 以上投入</div>
+        <div class="page-indicator">3 / 10</div>
+    </div>
+
+    <!-- 4. 内容页：托卡马克进展 -->
+    <div class="slide tech-grid-bg" data-index="3">
+        <div style="width:100%; max-width: 1100px;">
+            <h2>🌀 托卡马克 · 主流路径</h2>
+            <div class="glow-line"></div>
+            <ul class="point-list">
+                <li><span class="icon">🔵</span><span class="text"><span class="highlight">ITER</span> (国际热核聚变实验堆) 2025年安装第一等离子体，目标Q≥10 (500MW/50MW)</span></li>
+                <li><span class="icon">🔴</span><span class="text"><span class="highlight">EAST</span> 中国全超导托卡马克，2023年实现403秒高约束模式等离子体 (中科院等离子体所)</span></li>
+                <li><span class="icon">🟢</span><span class="text"><span class="highlight">JT-60SA</span> 日本/欧盟联合，2024年首次等离子体，辅助加热40MW</span></li>
+                <li><span class="icon">⚙️</span><span class="text"><span class="highlight">SPARC</span> (CFS) 紧凑型高温超导托卡马克，目标2025年建成，Q>2</span></li>
+            </ul>
+            <div class="data-source">来源: ITER.org, 中科院等离子体所,  Nature Physics 2024</div>
+        </div>
+        <div class="page-indicator">4 / 10</div>
+    </div>
+
+    <!-- 5. 双栏页：磁约束 vs 惯性约束 -->
+    <div class="slide" data-index="4" style="background: #0a1422;">
+        <div style="width:100%; max-width: 1200px;">
+            <h2 style="border-left-color:#3a9fc7;">⚖️ 两大技术路线对比</h2>
+            <div class="glow-line"></div>
+            <div class="two-col-wrapper">
+                <div class="col">
+                    <h4>🧲 磁约束 (MCF)</h4>
+                    <ul>
+                        <li>托卡马克、仿星器、球形环</li>
+                        <li>稳态等离子体，磁场约束</li>
+                        <li>ITER、EAST、W7-X</li>
+                        <li>适合连续聚变发电</li>
+                        <li>工程复杂度高，第一壁挑战</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h4>🎯 惯性约束 (ICF)</h4>
+                    <ul>
+                        <li>激光驱动、Z箍缩、重离子</li>
+                        <li>脉冲式微爆，极高密度</li>
+                        <li>美国NIF 2022年实现净能量增益 (2.05MJ输入→3.15MJ输出)</li>
+                        <li>高重复频率工程难题</li>
+                        <li>适用于混合堆或未来发电</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="data-source" style="margin-top:15px;">LLNL 2022,  Nuclear Fusion 2023</div>
+        </div>
+        <div class="page-indicator">5 / 10</div>
+    </div>
+
+    <!-- 6. 内容页：中国进展 -->
+    <div class="slide tech-grid-bg" data-index="5">
+        <div style="width:100%; max-width: 1100px;">
+            <h2>🇨🇳 中国聚变工程</h2>
+            <div class="glow-line"></div>
+            <ul class="point-list">
+                <li><span class="icon">🌟</span><span class="text"><span class="highlight">CFETR</span> 中国聚变工程实验堆，设计功率200MW，氚自持，计划2030年代建设</span></li>
+                <li><span class="icon">⚡</span><span class="text"><span class="highlight">HL-2M</span> 中国环流器二号M，等离子体电流3MA，2022年实现1.5亿度高温</span></li>
+                <li><span class="icon">🔬</span><span class="text"><span class="highlight">BEST</span> 紧凑型聚变堆，基于高温超导，2024年启动设计 (合肥)</span></li>
+                <li><span class="icon">📈</span><span class="text"><span class="highlight">投资规模</span> 中国聚变研发年投入超30亿元，专利数全球第二 (2024 WIPO)</span></li>
+            </ul>
+            <div class="data-source">来源: 中国核工业集团, 核聚变与等离子体物理 2024</div>
+        </div>
+        <div class="page-indicator">6 / 10</div>
+    </div>
+
+    <!-- 7. 章节页：商业化探索 -->
+    <div class="slide" data-index="6" style="background: radial-gradient(circle at 30% 70%, #0a2938, #030b12);">
+        <div class="section-title">✦ 商业化聚变 ✦</div>
+        <div class="section-sub">私营企业 · 紧凑堆 · 高温超导</div>
+        <div style="margin-top:25px; color:#66a3c2;">全球已有超过30家聚变初创公司 (2025)</div>
+        <div class="page-indicator">7 / 10</div>
+    </div>
+
+    <!-- 8. 双栏页：主要初创公司 -->
+    <div class="slide" data-index="7" style="background: #0b1422;">
+        <div style="width:100%; max-width: 1200px;">
+            <h2 style="border-left-color:#3a9fc7;">🚀 聚变初创力量</h2>
+            <div class="glow-line"></div>
+            <div class="two-col-wrapper">
+                <div class="col">
+                    <h4>🇺🇸 美国</h4>
+                    <ul>
+                        <li>Commonwealth Fusion Systems (SPARC)</li>
+                        <li>TAE Technologies (场反转配置)</li>
+                        <li>General Fusion (磁化靶)</li>
+                        <li>Zap Energy (Z箍缩)</li>
+                        <li>Helion Energy (场反转+脉冲)</li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h4>🇪🇺🇬🇧 欧洲/英国</h4>
+                    <ul>
+                        <li>Tokamak Energy (球形托卡马克)</li>
+                        <li>First Fusion (仿星器)</li>
+                        <li>Marvel Fusion (激光)</li>
+                        <li>Renaissance Fusion (仿星器)</li>
+                        <li>Helion Energy (欧洲分部)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="data-source" style="margin-top:12px;">Fusion Industry Association 2024 报告</div>
+        </div>
+        <div class="page-indicator">8 / 10</div>
+    </div>
+
+    <!-- 9. 内容页：关键里程碑 -->
+    <div class="slide tech-grid-bg" data-index="8">
+        <div style="width:100%; max-width: 1100px;">
+            <h2>📅 聚变里程碑</h2>
+            <div class="glow-line"></div>
+            <ul class="point-list">
+                <li><span class="icon">🕒</span><span class="text"><span class="highlight">2025-2027</span> ITER第一等离子体 & SPARC建成</span></li>
+                <li><span class="icon">🕒</span><span class="text"><span class="highlight">2030-2035</span> CFETR建设启动，DEMO设计完成</span></li>
+                <li><span class="icon">🕒</span><span class="text"><span class="highlight">2040-2050</span> 首个聚变电站并网发电 (预期)</span></li>
+                <li><span class="icon">⚡</span><span class="text"><span class="highlight">私营预测</span> Helion计划2028年演示净发电，CFS 2030年代商用电</span></li>
+            </ul>
+            <div class="data-source">综合ITER组织、CFS、Helion公开路线图 (2024)</div>
+        </div>
+        <div class="page-indicator">9 / 10</div>
+    </div>
+
+    <!-- 10. 结束页 -->
+    <div class="slide" data-index="9" style="background: radial-gradient(circle at 50% 50%, #0f2738, #070e18);">
+        <div class="ending-title">🌌 聚变 · 未来之光</div>
+        <div style="font-size:1.6rem; color:#9cc9e0; margin: 30px 0 20px; letter-spacing: 4px;">“ 在地球上复制一颗恒星 ”</div>
+        <div class="glow-line" style="width:200px;"></div>
+        <div style="margin-top:50px; font-size:1rem; color:#5a8da3;">感谢聆听 · 欢迎讨论</div>
+        <div class="page-indicator">10 / 10</div>
+        <div class="nav-hint">END</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        const slides = document.querySelectorAll('.slide');
+        let current = 0;
+        const total = slides.length;
+
+        function updateSlide(index) {
+            slides.forEach((s, i) => {
+                s.classList.toggle('active', i === index);
+            });
+            // 更新页码 (已经内嵌在每个slide里，但为了同步)
+            document.querySelectorAll('.page-indicator').forEach((el, i) => {
+                el.textContent = (i + 1) + ' / ' + total;
+            });
+        }
+
+        function nextSlide() {
+            if (current < total - 1) {
+                current++;
+                updateSlide(current);
+            }
+        }
+
+        function prevSlide() {
+            if (current > 0) {
+                current--;
+                updateSlide(current);
+            }
+        }
+
+        // 键盘事件
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // 触摸支持 (移动端)
+        let touchStartX = 0;
+        let touchEndX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        }, { passive: true });
+
+        // 点击左右区域翻页 (可选)
+        document.addEventListener('click', (e) => {
+            const x = e.clientX;
+            const w = window.innerWidth;
+            if (x > w * 0.75) nextSlide();
+            else if (x < w * 0.25) prevSlide();
+        });
+
+        updateSlide(0);
+    })();
+</script>
+</body>
+</html>

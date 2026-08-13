@@ -38,3 +38,14 @@ coverage/
 # Uploads
 uploads/
 public/uploads/
+# Database runtime files (SQLite WAL mode)
+*.db
+*.db-shm
+*.db-wal
+
+# Generated PPT output
+data/*.pptx
+data/*.html
+
+# Source maps
+*.map

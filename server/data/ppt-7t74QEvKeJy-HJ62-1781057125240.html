@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>可控核聚变的技术发展路径研究</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;height:100%;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans SC','Microsoft YaHei',sans-serif;background:#f8fafc;}
+  .slides{width:100%;height:100%;position:relative;}
+
+  .slide{position:absolute;top:0;left:0;width:100%;height:100%;display:none;flex-direction:column;overflow:hidden;}
+  .slide.active{display:flex;}
+
+  /* ── Cover ── */
+  .slide-cover{background:linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #1d4ed8 100%);color:#ffffff;align-items:center;justify-content:center;text-align:center;padding:80px;}
+  .slide-cover .cover-title{font-size:clamp(32px,4.5vw,64px);font-weight:700;letter-spacing:2px;margin-bottom:16px;line-height:1.3;}
+  .slide-cover .cover-subtitle{font-size:clamp(16px,2vw,28px);opacity:0.85;font-weight:300;max-width:80%;}
+  .slide-cover .cover-line{width:80px;height:3px;border-radius:2px;background:#ffffff;opacity:0.4;margin:24px auto;}
+  .slide-cover .cover-decoration{position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.04);pointer-events:none;}
+  .slide-cover .cover-decoration2{position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,0.03);pointer-events:none;}
+
+  /* ── Content ── */
+  .slide-content{background:#ffffff;padding:0;}
+  .content-header{background:#2563eb;padding:18px 60px;}
+  .content-header h2{color:#fff;font-size:clamp(18px,2.2vw,32px);font-weight:600;letter-spacing:0.5px;}
+  .content-body{flex:1;padding:40px 60px 50px;display:flex;flex-direction:column;justify-content:center;}
+  .content-body ul{list-style:none;width:100%;}
+  .content-body li{font-size:clamp(14px,1.5vw,22px);padding:10px 0;line-height:1.7;color:#1e293b;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid #e2e8f0;}
+  .content-body li:last-child{border-bottom:none;}
+  .content-body li .dot{width:10px;height:10px;border-radius:50%;background:#2563eb;flex-shrink:0;margin-top:8px;}
+  .two-col-body{flex:1;padding:30px 60px 50px;display:flex;gap:40px;}
+  .two-col-body .col{flex:1;display:flex;flex-direction:column;justify-content:center;}
+  .two-col-body .col ul{list-style:none;}
+  .two-col-body .col li{font-size:clamp(13px,1.3vw,20px);padding:8px 0;line-height:1.6;color:#1e293b;display:flex;gap:12px;align-items:flex-start;}
+  .two-col-body .col li .dot{width:8px;height:8px;border-radius:50%;background:#2563eb;flex-shrink:0;margin-top:7px;}
+
+  /* ── Section ── */
+  .slide-section{background:linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);color:#1e3a5f;align-items:center;justify-content:center;text-align:center;padding:60px;}
+  .slide-section h2{font-size:clamp(24px,3vw,44px);font-weight:600;}
+  .slide-section .section-line{margin:16px auto;width:60px;height:2px;border-radius:1px;background:#2563eb;}
+
+  /* ── Ending ── */
+  .slide-ending{background:#1e3a5f;color:#ffffff;align-items:center;justify-content:center;text-align:center;padding:60px;}
+  .slide-ending h2{font-size:clamp(28px,3.5vw,52px);font-weight:600;margin-bottom:16px;}
+  .slide-ending p{font-size:clamp(14px,1.4vw,22px);opacity:0.6;}
+
+  /* ── Navigation ── */
+  .nav-bar{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:16px;}
+  .nav-btn{width:44px;height:44px;border-radius:50%;border:1px solid #e2e8f0;background:#ffffff;color:#1e293b;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
+  .nav-btn:hover{background:#2563eb;color:#fff;border-color:#2563eb;}
+  .nav-btn:disabled{opacity:0.3;cursor:default;}
+  .nav-btn:disabled:hover{background:#ffffff;color:#1e293b;border-color:#e2e8f0;}
+  .page-indicator{font-size:13px;color:#64748b;min-width:60px;text-align:center;font-variant-numeric:tabular-nums;}
+  .slide-number{position:fixed;bottom:32px;right:36px;font-size:12px;color:#64748b;opacity:0.6;z-index:100;font-variant-numeric:tabular-nums;letter-spacing:1px;}
+</style>
+</head>
+<body>
+<div class="slides">
+<div class="slide slide-cover active">
+        <div class="cover-decoration"></div>
+        <div class="cover-decoration2"></div>
+        <div class="cover-title">可控核聚变的技术发展路径研究</div>
+        <div class="cover-subtitle">从基础研究到商业应用的路线图</div>
+        <div class="cover-line"></div>
+      </div>
+<div class="slide slide-content">
+        <div class="content-header"><h2>核聚变原理与优势</h2></div>
+        <div class="content-body">
+          <ul><li><span class="dot"></span>核聚变是轻原子核结合成重核并释放巨大能量的过程（太阳能量来源）</li><li><span class="dot"></span>燃料氘和氚储量丰富：1升海水中的氘聚变能量相当于300升汽油</li><li><span class="dot"></span>无长寿命放射性废物，安全性高，不会发生核熔毁</li><li><span class="dot"></span>国际热核聚变实验堆（ITER）预计2025年首次等离子体运行（来源：ITER官网）</li></ul>
+        </div>
+      </div>
+<div class="slide slide-content">
+        <div class="content-header"><h2>主要技术路线：磁约束与惯性约束</h2></div>
+        <div class="content-body">
+          <ul><li><span class="dot"></span>磁约束：托卡马克、仿星器，利用强磁场约束等离子体（如ITER）</li><li><span class="dot"></span>惯性约束：激光驱动（如美国国家点火装置NIF），通过压缩燃料实现聚变</li><li><span class="dot"></span>其他路线：磁化靶聚变（MIF）、场反位形（FRC）等</li><li><span class="dot"></span>磁约束是当前主流，ITER为最大磁约束实验装置（投资超200亿美元）</li></ul>
+        </div>
+      </div>
+<div class="slide slide-content">
+        <div class="content-header"><h2>国际进展：ITER与私营企业</h2></div>
+        <div class="content-body">
+          <ul><li><span class="dot"></span>ITER：35国合作，目标实现Q≥10（输出功率/输入功率），预计2035年氘氚运行</li><li><span class="dot"></span>私营企业：Commonwealth Fusion Systems（CFS）计划2025年建成SPARC（Q≥2）</li><li><span class="dot"></span>TAE Technologies：采用场反位形，目标2030年商用示范</li><li><span class="dot"></span>中国：EAST装置实现1.2亿度等离子体运行（2021年），CFETR计划2030年代建设</li></ul>
+        </div>
+      </div>
+<div class="slide slide-content">
+        <div class="content-header"><h2>中国可控核聚变发展路径</h2></div>
+        <div class="content-body">
+          <ul><li><span class="dot"></span>第一阶段：参与ITER（2006年加入），吸收技术（中国承担约9%费用）</li><li><span class="dot"></span>第二阶段：建设中国聚变工程实验堆CFETR（设计阶段，目标功率200MW）</li><li><span class="dot"></span>第三阶段：2035-2050年实现聚变示范堆DEMO，并网发电</li><li><span class="dot"></span>中国科学院等离子体物理研究所主导，EAST已实现100秒长脉冲（来源：中科院）</li></ul>
+        </div>
+      </div>
+<div class="slide slide-content">
+        <div class="content-header"><h2>关键挑战：等离子体约束与材料</h2></div>
+        <div class="content-body">
+          <ul><li><span class="dot"></span>等离子体不稳定性：需抑制边界局域模（ELM）等，ITER采用3D场控制</li><li><span class="dot"></span>材料问题：第一壁材料需承受14MeV中子辐照，钨/铍组合研究进行中</li><li><span class="dot"></span>氚自持：利用锂包层增殖氚，增殖比需大于1，设计复杂</li><li><span class="dot"></span>超导磁体：ITER采用Nb3Sn超导，CFS采用高温超导（HTS）减小体积</li></ul>
+        </div>
+      </div>
+<div class="slide slide-content">
+        <div class="content-header"><h2>技术突破与未来方向</h2></div>
+        <div class="content-body">
+          <ul><li><span class="dot"></span>高温超导（HTS）磁体：使紧凑型托卡马克成为可能（如SPARC）</li><li><span class="dot"></span>先进等离子体控制：AI实时优化（DeepMind与瑞士等离子体中心合作）</li><li><span class="dot"></span>激光聚变：NIF实现1.3倍能量增益（2022年），但重复频率低</li><li><span class="dot"></span>液态金属包层：解决固态包层热应力问题，中国开展FLiBe实验</li></ul>
+        </div>
+      </div>
+<div class="slide slide-content">
+        <div class="content-header"><h2>经济性与商业化前景</h2></div>
+        <div class="content-body">
+          <ul><li><span class="dot"></span>预计2030-2040年实现Q&gt;10的聚变能示范，2050年后商业电站</li><li><span class="dot"></span>平准化度电成本（LCOE）目标：约0.05美元/kWh（与天然气相当）</li><li><span class="dot"></span>CFS预计SPARC成本约5亿美元，未来商用电站成本可降至每千瓦数千美元</li><li><span class="dot"></span>市场预测：2050年聚变能市场规模可达万亿美元（来源：Fusion Industry Association）</li></ul>
+        </div>
+      </div>
+<div class="slide slide-content">
+        <div class="content-header"><h2>国际合作与竞争态势</h2></div>
+        <div class="content-body">
+          <ul><li><span class="dot"></span>ITER项目延期与成本超支（原计划2018年运行，现推迟至2025年）</li><li><span class="dot"></span>私营企业崛起：2022年全球聚变公司获资超50亿美元（来源：FIA报告）</li><li><span class="dot"></span>中国：成立聚变能源联盟，推动产学研结合</li><li><span class="dot"></span>美国：聚变能源法案（2023年）简化监管，鼓励私营发展</li></ul>
+        </div>
+      </div>
+<div class="slide slide-ending">
+        <h2>感谢聆听</h2>
+        
+      </div>
+</div>
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀</button>
+  <span class="page-indicator" id="pageIndicator">1 / 10</span>
+  <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">▶</button>
+</div>
+<div class="slide-number" id="slideNumber">01 / 10</div>
+<script>
+(function(){var slides=document.querySelectorAll('.slide');var current=0;function show(n){slides.forEach(function(s,i){s.classList.toggle('active',i===n);});document.getElementById('pageIndicator').textContent=(n+1)+' / '+slides.length;document.getElementById('slideNumber').textContent=String(n+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');document.getElementById('prevBtn').disabled=n===0;document.getElementById('nextBtn').disabled=n===slides.length-1;}
+window.changeSlide=function(d){var next=current+d;if(next>=0&&next<slides.length){current=next;show(current);}};document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' ')changeSlide(1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')changeSlide(-1);});show(0);})();
+</script>
+</body>
+</html>
